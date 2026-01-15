@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Tester</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>How strong is your password?</h1>
+        <div class="subtitle">Take the Password Test</div>
+        <div class="input-row">
+            <input type="password" id="password" placeholder="Enter your password" />
+            <label class="show-password-label"><input type="checkbox" id="show-password"> Show password</label>
+        </div>
+
+        <div id="visual-indicators">
+            <span id="indicator-length" class="indicator">🔴 10+ chars</span>
+            <span id="indicator-upper" class="indicator">🔴 Uppercase</span>
+            <span id="indicator-lower" class="indicator">🔴 Lowercase</span>
+            <span id="indicator-number" class="indicator">🔴 Number</span>
+            <span id="indicator-symbol" class="indicator">🔴 Symbol</span>
+        </div>
+        <div id="smiley" style="font-size:2rem;margin:10px 0;">🙂</div>
+        <div id="strength"></div>
+        <div id="crack-time"></div>
+        <div id="feedback"></div>
+    </div>
+    <script src="script.js"></script>
+
+    <div class="education-section" style="max-width:700px;margin:40px auto 0 auto;padding:24px;background:#fffbe7;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,0.06);font-size:1.05rem;">
+        <h2 style="margin-top:0;">The Secrets of Strong Passwords</h2>
+        <p>At a glance, passwords seem simple. Just a few characters strung together, right? However, underestimating their complexity is where many users—and even developers—often go wrong.</p>
+        <p>The strength of a password isn’t just about being hard to guess; it’s about being hard to crack even by machines. In an era of credential stuffing, brute-force attacks, and leaked databases, effective password practices are the cornerstone of digital security.</p>
+        <ul>
+            <li><b>Longer Is Stronger:</b> Length is the biggest factor. A 16-character passphrase (like <i>elephants_run_under_blue_sky</i>) is much harder to crack than a short, complex password.</li>
+            <li><b>Avoid Predictable Patterns:</b> Don’t use names, common words, birthdays, or sequences like 123456 or qwerty. Attackers try these first.</li>
+            <li><b>Uniqueness Is Non-Negotiable:</b> Never reuse passwords across sites. Each password should be unique to prevent one breach from affecting other accounts.</li>
+            <li><b>Randomness Beats Cleverness:</b> Don’t just swap letters for numbers (like P@ssw0rd). Use random combinations or passphrases.</li>
+            <li><b>Balance Security and Usability:</b> Use password managers to create and store long, random passwords you don’t have to remember.</li>
+        </ul>
+        <p style="margin-bottom:0;">Mastering these basics is the first step to protecting your digital life!</p>
+    </div>
+</body>
+</html>
