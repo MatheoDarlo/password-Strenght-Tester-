@@ -14,6 +14,13 @@
             <input type="password" id="password" placeholder="Enter your password" />
             <label class="show-password-label"><input type="checkbox" id="show-password"> Show password</label>
         </div>
+        <div style="margin: 10px 0;">
+            <label style="margin-right: 10px;">Password Length:</label>
+            <label><input type="radio" name="length" value="10"> 10</label>
+            <label style="margin-left: 10px;"><input type="radio" name="length" value="16" checked> 16</label>
+            <label style="margin-left: 10px;"><input type="radio" name="length" value="24"> 24</label>
+        </div>
+        <button id="generate-btn" style="margin: 10px 0; padding: 10px 20px; font-size: 1rem; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">🔐 Generate Secure Password</button>
 
         <div id="visual-indicators">
             <span id="indicator-length" class="indicator">🔴 10+ chars</span>

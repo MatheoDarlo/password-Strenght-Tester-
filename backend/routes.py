@@ -13,5 +13,8 @@ def api_evaluate():
 
 @api.route('/api/suggest', methods=['GET'])
 def api_suggest():
-    suggestion = generate_strong_password()
+    length = request.args.get('length', default=16, type=int)
+    if length not in [10, 16, 24]:
+        length = 16
+    suggestion = generate_strong_password(length)
     return jsonify({'suggestion': suggestion})

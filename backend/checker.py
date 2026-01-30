@@ -55,7 +55,6 @@ def evaluate_password(password):
         score = max(score - 2, 0)
         tips.append('Avoid common words, names, patterns, or keyboard sequences.')
 
-    # Log weakness types (never the password)
     weakness_types = []
     if breached_pattern:
         weakness_types.append('breached')
@@ -72,9 +71,7 @@ def evaluate_password(password):
     if weakness_types:
         logging.info(f'Weaknesses detected: {", ".join(weakness_types)}')
 
-    # Count how many positive conditions are met
     conditions_met = sum([has_length, has_upper, has_lower, has_number, has_symbol])
-    # Only penalize for breached or slight variation for 'Strong'
     if conditions_met == 5 and not (breached_pattern or variation_pattern):
         strength = 'Strong'
     elif conditions_met >= 3 and not breached_pattern:

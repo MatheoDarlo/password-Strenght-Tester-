@@ -54,10 +54,23 @@ def has_sequence(pw):
                 return True
     return False
 
-def generate_strong_password(num_words=4):
-    words = random.sample(SUGGEST_WORDS, num_words)
-    sep = random.choice(['-', '_', '.', '~'])
-    number = str(random.randint(10, 99))
-    symbol = random.choice(['!', '@', '#', '$', '%', '&', '*'])
-    passphrase = sep.join(words) + number + symbol
-    return passphrase
+def generate_strong_password(length=16):
+    import string
+    lowercase = string.ascii_lowercase
+    uppercase = string.ascii_uppercase
+    digits = string.digits
+    symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?'
+    
+    password = [
+        random.choice(lowercase),
+        random.choice(uppercase),
+        random.choice(digits),
+        random.choice(symbols)
+    ]
+    
+    all_chars = lowercase + uppercase + digits + symbols
+    password.extend(random.choice(all_chars) for _ in range(length - 4))
+    
+    random.shuffle(password)
+    
+    return ''.join(password)

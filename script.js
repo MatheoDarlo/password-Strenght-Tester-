@@ -1,11 +1,27 @@
-
-// Show password toggle
 document.addEventListener('DOMContentLoaded', function() {
     const passwordInput = document.getElementById('password');
     const showPassword = document.getElementById('show-password');
     if (showPassword) {
         showPassword.addEventListener('change', function() {
             passwordInput.type = this.checked ? 'text' : 'password';
+        });
+    }
+    
+    const generateBtn = document.getElementById('generate-btn');
+    if (generateBtn) {
+        generateBtn.addEventListener('click', function() {
+            const selectedLength = document.querySelector('input[name="length"]:checked').value;
+            fetch(`http://localhost:5000/api/suggest?length=${selectedLength}`)
+                .then(res => res.json())
+                .then(data => {
+                    passwordInput.value = data.suggestion;
+                    passwordInput.type = 'text';
+                    showPassword.checked = true;
+                    passwordInput.dispatchEvent(new Event('input'));
+                })
+                .catch(() => {
+                    alert('Error: Could not connect to backend. Make sure Flask is running on port 5000.');
+                });
         });
     }
 });
@@ -50,7 +66,6 @@ function evaluatePassword(password) {
     };
 }
 
-// Small dictionary for demonstration
 const DICTIONARY = [
     'password', '1234', 'qwerty', 'letmein', 'admin', 'math', 'welcome', 'test', 'user', 'login', 'abc', 'iloveyou', 'monkey', 'dragon', 'sunshine', 'princess', 'football', 'charlie', 'donald', 'michelle', 'ashley', 'michael', 'jessica', 'daniel', 'david', 'matt', 'sarah', 'alex', 'john', 'emma', 'olivia', 'sophia', 'liam', 'noah', 'lucas', 'jack', 'oliver', 'harry', 'george', 'sam', 'ben', 'max', 'leo', 'oscar', 'mia', 'ava', 'ella', 'grace', 'chloe', 'lily', 'ruby', 'evie', 'freddie', 'archie', 'theo', 'arthur', 'logan', 'james', 'ethan', 'william', 'henry', 'joshua', 'sebastian', 'joseph', 'thomas', 'charlotte', 'amelia', 'isabella', 'sophie', 'emily', 'scarlett', 'mathe', 'maths', 'math0519'
 ];
@@ -60,26 +75,21 @@ function containsDictionaryWord(password) {
     return DICTIONARY.some(word => word.length > 2 && lower.includes(word));
 }
 
-// Estimate time to crack password (improved)
 function estimateCrackTime(password) {
-    // Assume brute force: 10 billion guesses/sec
     const guessesPerSecond = 1e10;
     let charset = 0;
     if (/[a-z]/.test(password)) charset += 26;
     if (/[A-Z]/.test(password)) charset += 26;
     if (/[0-9]/.test(password)) charset += 10;
-    if (/[^A-Za-z0-9]/.test(password)) charset += 32; // common symbols
+    if (/[^A-Za-z0-9]/.test(password)) charset += 32;
     const totalCombos = Math.pow(charset, password.length);
     let seconds = totalCombos / guessesPerSecond;
-    // Penalize if dictionary word is present
     if (containsDictionaryWord(password)) {
-        // Assume a dictionary attack can try 1 million passwords/sec
-        const dictSeconds = 1 / 1e6; // almost instant
-        // If password is only dictionary words and numbers/symbols, make it very fast
+        const dictSeconds = 1 / 1e6;
         if (/^[A-Za-z0-9@!#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+$/.test(password)) {
             seconds = Math.min(seconds, dictSeconds * 10);
         } else {
-            seconds = Math.min(seconds, 10); // at most 10 seconds
+            seconds = Math.min(seconds, 10);
         }
     }
     if (!password) return '';
@@ -95,7 +105,6 @@ function estimateCrackTime(password) {
 document.getElementById('password').addEventListener('input', function() {
     const password = this.value;
     if (!password) {
-        // Reset UI
         document.getElementById('strength').textContent = '';
         document.getElementById('indicator-length').textContent = '🔴 10+ chars';
         document.getElementById('indicator-upper').textContent = '🔴 Uppercase';
